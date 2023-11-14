@@ -1,0 +1,42 @@
+version: "3.4"
+
+services:
+  wiki1:
+    container_name: wiki1
+    image: bacherd/markdown-wiki
+    volumes:
+      - ./src/pages:/pages
+    restart: unless-stopped
+
+  wiki2:
+    container_name: wiki2
+    image: bacherd/markdown-wiki
+    volumes:
+      - ./src/pages:/pages
+    restart: unless-stopped
+
+  wiki3:
+    container_name: wiki3
+    image: bacherd/markdown-wiki
+    volumes:
+      - ./src/pages:/pages
+    restart: unless-stopped
+
+  nginxloadb:
+    container_name: loadb
+    build:
+      context: ./loadb
+      dockerfile: Dockerfile
+    restart: unless-stopped
+
+  nginx_proxy:
+    container_name: proxy
+
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
+    ports:
+      - 8090:80
+    
